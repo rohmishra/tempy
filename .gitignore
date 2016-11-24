@@ -2,3 +2,4 @@ globalvars.py
 privVars.py
 __pycache__
 setup.db
+hist.db

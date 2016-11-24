@@ -2,16 +2,17 @@ import privVars as keys
 import pycurl
 import argparse
 import io
+import os
 import sqlite3
 
 print (keys.weatherApiKey)
 
 # Create Weather Database
-def createWtrDB():
-    dbConnect=sqlite3.connect('setup.db')
+def createHistDB():
+    dbConnect=sqlite3.connect('hist.db')
     cnt = dbConnect.cursor()
-    cnt.execute('''CREATE TABLE wtr (geoTag text, FriendlyName text, lid number)''')
-    cnt.commit()
+    cnt.execute('''CREATE TABLE wtr (geoTag text, FriendlyName text, lid number, wether object)''')
+    dbConnect.commit()
     dbConnect.close()
 
 # getWthr
@@ -38,4 +39,8 @@ def getWthr():
 
 #print (getWthr())
 
-createWtrDB()
+
+#init history database
+if not (os.path.isfile('setup.db')):
+    createHistDB()
+    print("database initialized for Location History!")
