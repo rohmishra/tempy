@@ -5,6 +5,7 @@ import sqlite3
 from sys import argv
 import io
 
+# TODO: Add support for arguments
 script, arg = argv
 
 # Create Weather Database. Does not request or return any value.
@@ -22,7 +23,6 @@ def createHistDB():
 # Create API key file holder. Does not request or return any value.
 # CREATE privVars.py file.
 # Contains Default location, DarkSky and Google API key.
-#
 def createVarFile():
     print("Preparing key storage...")
     print("Note key storage is not encrypted (yet). Do not initialize on public PCs.")
@@ -38,6 +38,10 @@ def createVarFile():
     print("This file contains all private variables. Please run from main.py instead.")''' +'\n')
 
 
+# Main
+# runs only when called self
+# Creates database and variable/ API key holder file.
+# TODO: Add argument support.
 if __name__ == "__main__":
     # check for database
     print("Checking history database...")

@@ -1,11 +1,9 @@
 # (c) 2016. Rohan Mishra
 import privVars as keys
-import argparse
-import io
+#import argparse
 import os
-import sqlite3
-import googlemaps
-from datetime import datetime
+#import sqlite3
+#import googlemaps
 import json
 import requests
 
@@ -23,12 +21,12 @@ def getWthr( loc ):
 
     # set instance
     req = requests.get(link)
-    j = json.loads(req.text)
-    summary=j['currently'['summary']]
-    temperature = j['currently'['temperature']]
-    print('looks like its ' + summary + 'outside. Its ' +  temperature + 'Degrees.' )
+    jsondata = json.loads(req.text)
+    return jsondata
 
-
+# getUserLoc
+# Accepts: None
+# returns: user location coordinates.
 def getUserLoc():
     LocUrl = 'http://freegeoip.net/json'
     req = requests.get(LocUrl)
@@ -43,5 +41,11 @@ def getUserLoc():
     #getLocName = gmaps.reverse_geocode(latlon)
     #print(getLocName['formatted_address'])
 
-
-print(getWthr(getUserLoc()))
+# Main function.
+# Calls getUserLoc() to get user location and getWthr() to get weather at that location.
+# TODO: ADD support for arguments. Add history support.
+if __name__ == "__main__":
+    j = (getWthr(getUserLoc()))
+    summary=j['currently'['summary']]
+    temperature = j['currently'['temperature']]
+    print('looks like its ' + summary + 'outside. Its ' +  temperature + 'Degrees.' )
