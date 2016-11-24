@@ -1,46 +1,47 @@
+# (c) 2016. Rohan Mishra
 import privVars as keys
-import pycurl
 import argparse
 import io
 import os
 import sqlite3
+import googlemaps
+from datetime import datetime
+import json
+import requests
 
-print (keys.weatherApiKey)
+print("Powered by Dark Sky: https://darksky.net/poweredby/")
+print ('Using API key: ' + keys.weatherApiKey)
 
-# Create Weather Database
-def createHistDB():
-    dbConnect=sqlite3.connect('hist.db')
-    cnt = dbConnect.cursor()
-    cnt.execute('''CREATE TABLE wtr (geoTag text, FriendlyName text, lid number, wether object)''')
-    dbConnect.commit()
-    dbConnect.close()
 
 # getWthr
 # Accepts: location data
 # Returns: Weather data (JSON)
-
-def getWthr():
+def getWthr( loc ):
     #set storage and API link
-    returnData = io.BytesIO()
-    link = 'https://api.darksky.net/forecast/' + keys.weatherApiKey +'/19.211,72.874'
+    link = 'https://api.darksky.net/forecast/' + keys.weatherApiKey +'/' + loc
+    print(link)
 
     # set instance
-    connection = pycurl.Curl()
-
-    #set options
-    connection.setopt(connection.URL, link)
-    connection.setopt(connection.WRITEFUNCTION, returnData.write)
-
-    # perform cURL operation and close connection
-    connection.perform()
-    connection.close()
-
-    return (returnData);
-
-#print (getWthr())
+    req = requests.get(link)
+    j = json.loads(req.text)
+    summary=j['currently'['summary']]
+    temperature = j['currently'['temperature']]
+    print('looks like its ' + summary + 'outside. Its ' +  temperature + 'Degrees.' )
 
 
-#init history database
-if not (os.path.isfile('setup.db')):
-    createHistDB()
-    print("database initialized for Location History!")
+def getUserLoc():
+    LocUrl = 'http://freegeoip.net/json'
+    req = requests.get(LocUrl)
+    j = json.loads(req.text)
+    lat = j['latitude']
+    lon = j['longitude']
+    latlon = str(lat) + ',' + str(lon)
+    return(latlon);
+
+    # Setup Google Maps API
+    #gmaps=googlemaps.Client(key=keys.GoogleAppKey)
+    #getLocName = gmaps.reverse_geocode(latlon)
+    #print(getLocName['formatted_address'])
+
+
+print(getWthr(getUserLoc()))
