@@ -1,21 +1,41 @@
 import privVars as keys
 import pycurl
+import argparse
+import io
+import sqlite3
 
 print (keys.weatherApiKey)
 
-#set storage and API link
-returnData = None
-link = 'https://api.darksky.net/forecast/' + keys.weatherApiKey +'/19.211,72.874'
+# Create Weather Database
+def createWtrDB():
+    dbConnect=sqlite3.connect('setup.db')
+    cnt = dbConnect.cursor()
+    cnt.execute('''CREATE TABLE wtr (geoTag text, FriendlyName text, lid number)''')
+    cnt.commit()
+    dbConnect.close()
 
-# set instance
-connection = pycurl.Curl()
+# getWthr
+# Accepts: location data
+# Returns: Weather data (JSON)
 
-#set options
-connection.setopt(connection.URL, link)
-connection.setopt(connection.WRITEDATA, returnData)
+def getWthr():
+    #set storage and API link
+    returnData = io.BytesIO()
+    link = 'https://api.darksky.net/forecast/' + keys.weatherApiKey +'/19.211,72.874'
 
-# perform cURL operation and close connection
-connection.perform()
-connection.close()
+    # set instance
+    connection = pycurl.Curl()
 
-print (returnData)
+    #set options
+    connection.setopt(connection.URL, link)
+    connection.setopt(connection.WRITEFUNCTION, returnData.write)
+
+    # perform cURL operation and close connection
+    connection.perform()
+    connection.close()
+
+    return (returnData);
+
+#print (getWthr())
+
+createWtrDB()
