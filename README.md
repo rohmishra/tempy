@@ -8,7 +8,7 @@ Tempy weather is a open source weather app designed to be usefull while being mi
 
 Tempy needs to be setup first in order to be run. This is a one time requirment and can be done by navingating to the Tempy's folder and running the 'setup.py' file.
 
-> user@system ~/Projects/Tempy > python3 setup.py
+> python3 setup.py
 
 Please refer to [Getting Started](#getting-started) Section for detailed information.
 
@@ -39,7 +39,7 @@ To setup Tempy, make sure you are in the directory where you have cloned Tempy.
 
 Run the setup.py script to setup Tempy:
 
-> user@system ~/Projects/Tempy > pthon3 setup.py
+> pthon3 setup.py
 
 ## Using Tempy
 
@@ -47,7 +47,7 @@ Currently Tempy only allows you to view basic weather information about current 
 
 To run Tempy:
 
-> user@system ~/Projects/Tempy > pthon3 main.py
+> pthon3 main.py
 
 ## Sources
 
