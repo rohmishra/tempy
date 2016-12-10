@@ -39,7 +39,15 @@ To setup Tempy, make sure you are in the directory where you have cloned Tempy.
 
 Run the setup.py script to setup Tempy:
 
-> user@system ~/Projects/Tempy > pthon3.py
+> user@system ~/Projects/Tempy > pthon3 setup.py
+
+## Using Tempy
+
+Currently Tempy only allows you to view basic weather information about current location (determined by your IP adderess). Support for custom loactions and detailed information is coming soon-ish!
+
+To run Tempy:
+
+> user@system ~/Projects/Tempy > pthon3 main.py
 
 ## Sources
 
